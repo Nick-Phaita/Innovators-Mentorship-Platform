@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    <%- include('./includes/navbar') %>
+
+    <div class="container mt-4">
+        <h1>Search Results for "<%= query %>"</h1>
+
+        <h2 class="mt-4">User Profiles</h2>
+        <ul class="list-group mb-4">
+            <% profiles.forEach(profile => { %>
+                <li class="list-group-item">
+                    <a href="/profile/<%= profile.user_id %>" class="font-weight-bold">
+                        <h4><%= profile.User.username %> - <%= profile.User.role %></h4>
+                    </a>
+                    <p class="mb-1"><%= profile.first_name %> <%= profile.last_name %></p>
+                    <p><strong>Bio:</strong> <%= profile.bio %></p>
+                </li>
+            <% }) %>
+        </ul>
+
+        <h2 class="mt-4">Projects</h2>
+        <ul class="list-group">
+            <% projects.forEach(project => { %>
+                <li class="list-group-item">
+                    <a href="/project/<%= project.project_id %>" class="font-weight-bold">
+                        <h4><%= project.title %></h4>
+                    </a>
+                    <p class="mb-1"><%= project.description %></p>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/popper.js/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    
+    <div class="container mt-5">
+        <h1 class="mb-4">Authentication Details</h1>
+        <form action="/profile/myprofile/authentication/update" method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" class="form-control" value="<%= user.username %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="oldPassword" class="form-label">Old Password</label>
+                <input type="password" id="oldPassword" name="oldPassword" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="newPassword" class="form-label">New Password</label>
+                <input type="password" id="newPassword" name="newPassword" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+    
+    <!-- Bootstrap JS and dependencies -->
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

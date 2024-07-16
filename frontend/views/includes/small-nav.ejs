@@ -1,0 +1,26 @@
+<div class="project-navigation mt-4">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link <%= activeLink === 'home' ? 'active' : '' %>" href="/project/<%= project.project_id %>">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= activeLink === 'posts' ? 'active' : '' %>" href="/project/<%= project.project_id %>/posts">Posts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= activeLink === 'walls' ? 'active' : '' %>" href="/project/<%= project.project_id %>/walls">Walls</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= activeLink === 'members' ? 'active' : '' %>" href="/project/<%= project.project_id %>/members">Members</a>
+        </li>
+        <% if (isOwner) { %>
+            <li class="nav-item">
+                <a class="nav-link <%= activeLink === 'addMember' ? 'active' : '' %>" href="/project/<%= project.project_id %>/add-member">Add Member</a>
+            </li>
+        <% } %>
+        <% if (showRequestMentor) { %>
+            <li class="nav-item">
+                <a class="nav-link <%= activeLink === 'requestMentor' ? 'active' : '' %>" href="/project/<%= project.project_id %>/request-mentor">Request Mentor</a>
+            </li>
+        <% } %>
+    </ul>
+</div>

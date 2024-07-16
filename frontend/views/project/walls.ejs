@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Walls</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        .sticky-nav-container {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 1000;
+        }
+
+        .sidebar {
+            position: sticky; /* Make sidebar sticky */
+            top: 70px; /* Adjust this value based on your navbar height */
+            max-width: 250px; /* Set max width for sidebar */
+            border-right: 1px solid #ddd; /* Optional: add a border for separation */
+            padding-right: 20px; /* Space between sidebar and content */
+        }
+
+        .main-content {
+            margin-left: 20px; /* Space for sidebar */
+        }
+
+        .sidebar h3 {
+            margin-top: 20px;
+        }
+
+        .project-navigation {
+            margin-bottom: 20px; /* Space below navigation */
+        }
+
+        .active-thread {
+            background-color: #e9ecef; /* Light gray background for active thread */
+            border-left: 4px solid #007bff; /* Blue left border for emphasis */
+            padding: 10px; /* Padding for aesthetics */
+        }
+
+        .btn-create-thread {
+            margin-top: 5px; /* Space above button */
+            display: inline-block; /* Align button */
+        }
+    </style>
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    <!-- Constant navbar -->
+    <div class="sticky-nav-container">
+        <nav class="sticky-nav">
+            <%- include('../includes/navbar.ejs', { user: user }) %>
+        </nav>
+
+        <%- include('../includes/small-nav.ejs', { user: user, activeLink: 'walls' }) %>
+    </div>
+
+    <div class="d-flex">
+        <!-- Sidebar with wall links -->
+        <div class="sidebar">
+            <ul class="list-unstyled">
+                <% walls.forEach(wall => { %>
+                    <% if (wall.visibility === 'Public') { %>
+                        <li class="<%= currentWallId === wall.wall_id ? 'active-thread' : '' %>">
+                            <strong><%= wall.title %></strong>
+                            <% if (showRequestMentor) { %>
+                                <a href="/project/<%= project.project_id %>/walls/<%= wall.wall_id %>/create-thread" class="btn btn-primary btn-create-thread">Create Thread</a>
+                            <% } %>
+                            <!-- Include threads for the public wall -->
+                            <%- include('threads.ejs', { threads: wall.threads, projectId: project.project_id, wallId: wall.wall_id }) %>
+                        </li>
+                    <% } %>
+                <% }); %>
+            </ul>
+
+            <% if (showPrivateWall) { %>
+                <ul class="list-unstyled">
+                    <% walls.forEach(wall => { %>
+                        <% if (wall.visibility === 'Private') { %>
+                            <li class="<%= currentWallId === wall.wall_id ? 'active-thread' : '' %>">
+                                <strong><%= wall.title %></strong>
+                                <% if (showRequestMentor) { %>
+                                    <a href="/project/<%= project.project_id %>/walls/<%= wall.wall_id %>/create-thread" class="btn btn-primary btn-create-thread">Create Thread</a>
+                                <% } %>
+                                <!-- Include threads for the private wall -->
+                                <%- include('threads.ejs', { threads: wall.threads, projectId: project.project_id, wallId: wall.wall_id }) %>
+                            </li>
+                        <% } %>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </div>
+
+        <!-- Main content area for walls -->
+        <div class="main-content flex-grow-1">
+            <div id="comments-container">
+                <!-- Comments will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Your JavaScript code remains the same
+        function attachFormEventListener() {
+            const addCommentForm = document.getElementById('add-comment-form');
+            if (addCommentForm) {
+                addCommentForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const formData = new FormData(addCommentForm);
+                    const urlParams = new URLSearchParams(formData);
+                    fetch(addCommentForm.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: urlParams.toString()
+                    })
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('comments-container').innerHTML = html;
+                        addCommentForm.reset(); // Reset the form after successful submission
+                        attachFormEventListener(); // Re-attach event listener after form is re-rendered
+                    })
+                    .catch(error => {
+                        console.error('Error adding comment:', error);
+                    });
+                });
+            }
+        }
+
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                // Skip adding `/comments` to create-thread links
+                if (this.getAttribute('href').includes('create-thread')) {
+                    return;
+                }
+                event.preventDefault();
+                const timestamp = Date.now(); // Generate a timestamp
+                const url = `${this.getAttribute('href')}/comments?timestamp=${timestamp}`;
+                fetch(url)
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('comments-container').innerHTML = html;
+                        attachFormEventListener(); // Attach event listener to the form after loading comments
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                    });
+            });
+        });
+
+        // Attach initial form event listener if the form is present at the beginning
+        attachFormEventListener();
+    </script>
+</body>
+</html>
+
+

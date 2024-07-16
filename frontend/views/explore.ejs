@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    <!-- Constant navbar -->
+    <nav>
+        <%- include('./includes/navbar.ejs', { user: user }) %>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">Explore</h1>
+
+        <form action="/explore/search" method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="query" class="form-control" placeholder="Search for projects or profiles..." required>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+        
+        <h2 class="mb-3">Suggested Projects</h2>
+        <ul class="list-group mb-4">
+            <% projects.forEach(project => { %>
+                <li class="list-group-item">
+                    <a href="/project/<%= project.project_id %>" class="font-weight-bold">
+                        <h4><%= project.title %></h4>
+                    </a>
+                    <p class="mb-1"><%= project.description %></p>
+                </li>
+            <% }) %>
+        </ul>
+        <% if (isInnovator) { %>
+        <h2 class="mb-3">Suggested Mentors</h2>
+        <ul class="list-group">
+            <% mentors.forEach(mentor => { %>
+                <li class="list-group-item">
+                    <a href="/profile/<%= mentor.user_id %>" class="font-weight-bold">
+                        <h4><%= mentor.User.username %> - <%= mentor.User.role %></h4>
+                    </a>
+                    <p class="mb-1"><%= mentor.first_name %> <%= mentor.last_name %></p>
+                    <p><strong>Bio:</strong> <%= mentor.bio %></p>
+                </li>
+            <% }) %>
+        </ul>
+        <% } %>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/popper.js/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

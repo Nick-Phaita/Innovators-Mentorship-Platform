@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Thread</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    <div class="container mt-4">
+        <h2>Create a New Thread</h2>
+        <form action="/project/<%= project.project_id %>/walls/<%= wall.wall_id %>/create-thread" method="POST" class="mt-3">
+            <div class="mb-3">
+                <label for="title" class="form-label">Thread Title:</label>
+                <input type="text" id="title" name="title" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Thread</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

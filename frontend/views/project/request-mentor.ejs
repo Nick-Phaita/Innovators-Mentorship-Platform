@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentorship Requests</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    <!-- Constant navbar -->
+    <nav>
+        <%- include('../includes/navbar.ejs', { user: user }) %>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Mentorship Requests</h1>
+
+        <!-- Smaller navigation bar -->
+        <%- include('../includes/small-nav.ejs', { user: user, activeLink: 'requestMentor' }) %>
+
+        <div class="mt-4">
+            <h2>Send a Mentorship Request</h2>
+            <form action="/project/<%= project.project_id %>/request-mentor" method="POST">
+                <div class="form-group">
+                    <label for="mentor-username">Mentor Username:</label>
+                    <input type="text" id="mentor-username" name="mentorUsername" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Request</button>
+            </form>
+        </div>
+
+        <div class="mt-4">
+            <h2>Mentorship Requests Sent</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Mentor</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% mentorshipRequests.forEach(request => { %>
+                        <tr>
+                            <td><%= request.User.username %></td>
+                            <td><%= request.status %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

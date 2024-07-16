@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Members</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        .project-navigation {
+            margin-bottom: 20px; /* Space below navigation */
+        }
+
+        .project-navigation ul {
+            list-style-type: none; /* Remove bullet points */
+            padding: 0; /* Remove padding */
+        }
+
+        .project-navigation li {
+            display: inline; /* Display items inline */
+            margin-right: 15px; /* Space between items */
+        }
+
+        .project-navigation a {
+            text-decoration: none; /* Remove underline */
+            color: #007bff; /* Bootstrap primary color */
+        }
+
+        .project-navigation a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        h1 {
+            margin-top: 20px; /* Space above heading */
+        }
+
+        .member-list {
+            list-style-type: none; /* Remove bullet points */
+            padding: 0; /* Remove padding */
+        }
+
+        .member-list li {
+            padding: 10px; /* Space inside list items */
+            border: 1px solid #ddd; /* Border for visual clarity */
+            border-radius: 5px; /* Rounded corners */
+            margin-bottom: 10px; /* Space between items */
+        }
+
+        .member-role {
+            color: #6c757d; /* Bootstrap muted color for roles */
+        }
+    </style>
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    <!-- Constant navbar -->
+    <nav>
+        <%- include('../includes/navbar.ejs', { user: user }) %>
+    </nav>
+
+    <!-- Small navigation bar -->
+    <%- include('../includes/small-nav.ejs', { user: user, activeLink: 'members' }) %>
+
+    <!-- Display members -->
+    <div class="container">
+        <h1>Project Members</h1>
+        <ul class="member-list">
+            <% projectMembers.forEach(member => { %>
+                <li>
+                    <%= member.User.username %> - <span class="member-role"><%= member.role %></span>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</body>
+</html>

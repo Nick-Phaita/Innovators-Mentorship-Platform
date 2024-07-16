@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= isInnovator ? "My Projects" : "Mentoring" %></title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+        <!-- Sticky navigation bar -->
+        <nav>
+            <%- include('../includes/navbar.ejs', { user: user }) %>
+        </nav>
+        <div class="container mt-4">
+        <!-- Main content -->
+        <main>
+            <section class="projects">
+                <h2 class="mb-4"><%= isInnovator ? "My Projects" : "Mentoring" %></h2>
+                <% if (isInnovator) { %>
+                <div class="mb-4">
+                    <a href="/project/create" class="btn btn-success">Add Project</a>
+                </div>    
+                <% } %>            
+                <div class="row">
+                    <% projects.forEach(project => { %>
+                        <div class="col-md-4 mb-4">
+                            <div class="card project-card" data-project-id="<%= project.project_id %>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= project.title %></h5>
+                                    <p class="card-text"><%= project.description %></p>
+                                    <p class="card-text">Followers: <%= project.followersCount %></p>
+                                    <a href="/project/<%= project.project_id %>" class="btn btn-primary">View Project</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/popper.js/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Your JavaScript scripts -->
+    <script src="/js/follow.js"></script>
+</body>
+</html>

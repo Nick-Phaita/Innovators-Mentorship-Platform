@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= project.title %> - Project</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    <!-- Constant navbar -->
+    <nav>
+        <%- include('../includes/navbar.ejs', { user: user }) %>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Project title and description -->
+        <h1 class="mb-3"><%= project.title %></h1>
+        <p class="lead"><%= project.description %></p>
+        <p>Followers: <strong><%= followersCount %></strong></p>
+        <button class="btn btn-outline-danger follow-btn" data-project-id="<%= project.project_id %>">
+            <% if (isFollowed) { %>
+                Unfollow
+            <% } else { %>
+                Follow
+            <% } %>
+        </button>
+
+        <!-- Smaller navigation bar -->
+        <%- include('../includes/small-nav.ejs', { user: user, activeLink: 'home' }) %>
+
+        <!-- Main content area for project sections -->
+        <!-- Other project-specific content can be added here -->
+    </div>
+
+    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/popper.js/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Your JavaScript scripts -->
+    <script src="/js/follow.js"></script>
+</body>
+</html>

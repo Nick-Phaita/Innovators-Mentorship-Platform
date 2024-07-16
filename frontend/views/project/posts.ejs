@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= project.title %> - Posts</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        /* Custom styles for sticky navigation and image size */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            background-color: white; /* Ensure the background is visible */
+            z-index: 1000; /* Keep it on top of other elements */
+        }
+
+        .posts-container {
+            max-height: 400px; /* Set a max height for scrollable content */
+            overflow-y: auto; /* Enable vertical scrolling */
+            border: 1px solid #ddd; /* Optional: add a border for visual clarity */
+            padding: 10px; /* Optional: add padding for aesthetics */
+        }
+
+        .post-card img {
+            max-width: 100%; /* Ensure images are responsive */
+            height: auto; /* Maintain aspect ratio */
+            max-height: 300px; /* Limit the maximum height of images */
+        }
+    </style>
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    <!-- Constant navbar -->
+    <nav class="sticky-nav">
+        <%- include('../includes/navbar.ejs', { user: user }) %>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Smaller navigation bar -->
+        <%- include('../includes/small-nav.ejs', { user: user, activeLink: 'posts' }) %>
+
+        <!-- Add post link (visible to project members only) -->
+        <% if (showRequestMentor) { %>
+            <a href="/project/<%= project.project_id %>/add-post" class="btn btn-primary mb-3">Add Post</a>
+        <% } %>
+
+        <!-- Main content area for project sections -->
+        <div class="project-content">
+            <!-- Content will be dynamically loaded based on the selected section -->
+            <% if (posts && posts.length > 0) { %>
+                <div class="posts-container">
+                    <% posts.forEach(post => { %>
+                        <div class="post-card card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= post.User.username %></h5>
+                                <% if (post.imageUrl) { %>
+                                    <img src="<%= post.imageUrl %>" alt="Post Image" class="img-fluid mb-2"/>
+                                <% } %>
+                                <p class="card-text"><%= post.content %></p>
+                                <p class="card-text text-muted"><small><%= post.created_at %></small></p>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <p>No posts found.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/popper.js/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Your JavaScript scripts -->
+    <script src="/js/follow.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Email Verification</h1>
+        <% if (message) { %>
+            <div class="alert alert-info"><%= message %></div>
+        <% } %>
+        <form action="/auth/verify" method="POST">
+            <input type="hidden" name="email" value="<%= email %>">
+            <div class="form-group">
+                <label for="verificationToken">Verification Code:</label>
+                <input type="text" name="verificationToken" id="verificationToken" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Verify</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

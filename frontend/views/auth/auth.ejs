@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" type="text/css" href="../assets/css/Slidestyle.css">
+</head>
+<body>  
+
+
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true">
+        <div class="signup">
+            <form id="signup-form" action="/auth/signup" method="POST">
+                <label for="username" aria-hidden="true">Sign up</label>
+                <input type="text" name="username" placeholder="User Name" required="">
+                <input type="email" name="email" placeholder="Email" required="">
+                <input type="password" name="password" placeholder="Password" required="" minlength="8">
+                <input id="role" type="text" name="role" placeholder="Role: Mentor/Innovator" required="">
+                
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+        <div class="login">
+            <form action="/auth/login" method="post">
+                <label for="chk" aria-hidden="true">Log In</label>
+                <input type="email" name="email" placeholder="Email" required="">
+                <input type="password" name="password" placeholder="Password" required="">
+                <button type="submit">Login</button>
+            </form>
+        </div> 
+    </div>
+
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            const roleInput = document.getElementById('role').value.trim().toLowerCase();
+            if (roleInput !== 'mentor' && roleInput !== 'innovator') {
+                alert('Role must be either "mentor" or "innovator".');
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    </script>
+
+</body>
+</html>

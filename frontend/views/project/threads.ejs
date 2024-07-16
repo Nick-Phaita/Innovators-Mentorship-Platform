@@ -1,0 +1,12 @@
+<% if (message) { %>
+    <script>
+        alert("<%= message %>");
+    </script>
+<% } %>
+<ul>
+    <% threads.forEach(thread => { %>
+        <li class="<%= currentThreadId === thread.thread_id ? 'active-thread' : '' %>">
+            <a href="/project/<%= projectId %>/walls/<%= wallId %>/threads/<%= thread.thread_id %>"><%= thread.title %></a>
+        </li>
+    <% }); %>
+</ul>

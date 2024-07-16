@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Profile</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 2rem;
+        }
+        .profile-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        h1 {
+            color: #343a40;
+        }
+        h2 {
+            color: #007bff;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        a {
+            margin-top: 1rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+    <div class="container">
+        <h1>Profile</h1>
+        <div class="profile-card">
+            <h2><%= profile.User.username %></h2>
+            <p><strong>Role:</strong> <%= profile.User.role %></p>
+            <p><strong>Name:</strong> <%= profile.first_name %> <%= profile.last_name %></p>
+            <p><strong>Occupation:</strong> <%= profile.occupation %></p>
+            <p><strong>Interests:</strong> <%= profile.interests %></p>
+            <p><strong>Skills:</strong> <%= profile.skills %></p>
+            <p><strong>Experience:</strong> <%= profile.experience %></p>
+            <p><strong>Achievements:</strong> <%= profile.achievements %></p>
+            <p><strong>Links:</strong> <%= profile.links %></p>
+            <p><strong>Bio:</strong> <%= profile.bio %></p>
+            <% if (user.user_id === profile.user_id) { %>
+                <a href="/profile/myprofile/edit" class="btn btn-primary">Edit Profile</a>
+            <% } %>
+        </div>
+    </div>
+    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/popper.js/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

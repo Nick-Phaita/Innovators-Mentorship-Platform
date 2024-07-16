@@ -1,0 +1,26 @@
+<!-- thread-comments.ejs -->
+<% if (message) { %>
+    <script>
+        alert("<%= message %>");
+    </script>
+<% } %>
+<!-- List of comments in the selected thread -->
+<div class="comment-list">
+    <h2><%= thread.title %></h2>
+    <% comments.forEach(comment => { %>
+        <div class="comment">
+            <p><strong><%= comment.User.username %></strong>: <%= comment.content %></p>
+            <p>Posted on: <%= comment.created_at %></p>
+        </div>
+    <% }); %>
+</div>
+
+<!-- Form to add a new comment -->
+<% if (user) { %>
+    <form id="add-comment-form" action="/project/<%= projectId %>/walls/<%= wallId %>/threads/<%= threadId %>/add-comment" method="POST">
+        <textarea name="content" rows="4" cols="50" placeholder="Add your comment..." required></textarea><br>
+        <button type="submit">Submit Comment</button>
+    </form>
+<% } else { %>
+    <p>Please <a href="/login">log in</a> to add a comment.</p>
+<% } %>

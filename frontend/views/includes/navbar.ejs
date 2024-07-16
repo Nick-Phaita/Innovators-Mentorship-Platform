@@ -1,0 +1,40 @@
+<p>Welcome, <%= user.username %></p>
+
+<nav class="sticky-top navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">Home</a>
+                </li>
+                <% if (user.role === 'innovator') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/project/myprojects">My Projects</a>
+                    </li>
+                <% } else if (user.role === 'mentor') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/project/myprojects">Mentoring</a>
+                    </li>
+                <% } %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/explore">Explore</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/notifications">Notifications</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile/myprofile">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <form action="/auth/logout" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-link nav-link">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentorship Response</title>
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+    <% if (message) { %>
+        <script>
+            alert("<%= message %>");
+        </script>
+    <% } %>
+
+    <div class="container mt-4">
+        <h1>Response to Mentorship Request</h1>
+        <p>You have a mentorship request for <strong><%= project.title %></strong>.</p>
+
+        <form action="/project/<%= projectId %>/mentorship-response/<%= requestId %>" method="POST">
+            <div class="form-group">
+                <label for="response">Choose your response:</label>
+                <select id="response" name="response" class="form-control" required>
+                    <option value="accept">Accept</option>
+                    <option value="reject">Reject</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Response</button>
+        </form>
+    </div>
+
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
