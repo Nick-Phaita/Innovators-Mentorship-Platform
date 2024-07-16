@@ -1,5 +1,2 @@
-/backend
 /node_modules
-/package-lock.json
-/package.json
-/prompt.txt
+/frontend/public/assets/vendor
